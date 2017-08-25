@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  whoami:
+    image: emilevauge/whoami
+    deploy:
+      replicas: 2
+      labels:
+        - "traefik.port=80"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.backend=whoami"
+        - "traefik.frontend.rule=Host:whoami.brewmap.co"
+    networks:
+      - web
+networks:
+  web:
+    external:
+      name: traefik-net
