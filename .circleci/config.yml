@@ -6,4 +6,6 @@ jobs:
       - image: hashicorp/terraform:light
     steps:
       - checkout
-      - run: terraform plan
+      - run:
+          working_directory: ~/project/terraform
+          command: terraform plan
