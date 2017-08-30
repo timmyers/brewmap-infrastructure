@@ -1,1 +1,8 @@
 version: 2.0
+
+jobs:
+  build:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - run: terraform plan
