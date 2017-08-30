@@ -16,3 +16,11 @@ jobs:
             terraform plan > /tmp/artifacts/tfplan
       - store_artifacts:
           path: /tmp/artifacts
+
+  workflows:
+    version: 2
+    plan_and_approve:
+      jobs:
+        - build
+        - hold:
+          type: approval
