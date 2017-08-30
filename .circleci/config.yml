@@ -5,4 +5,5 @@ jobs:
     docker:
       - image: hashicorp/terraform:light
     steps:
+      - checkout
       - run: terraform plan
