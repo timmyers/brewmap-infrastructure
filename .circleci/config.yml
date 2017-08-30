@@ -8,4 +8,7 @@ jobs:
       - checkout
       - run:
           working_directory: ~/project/terraform
+          command: terraform init
+      - run:
+          working_directory: ~/project/terraform
           command: terraform plan
