@@ -11,4 +11,8 @@ jobs:
           command: terraform init
       - run:
           working_directory: ~/project/terraform
-          command: terraform plan
+          command: |
+            mkdir /tmp/artifacts;
+            terraform plan > /tmp/artifacts/tfplan
+      - store_artifacts:
+          path: /tmp/artifacts
