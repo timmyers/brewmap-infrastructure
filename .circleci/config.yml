@@ -22,7 +22,10 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock -e DOCKER_HOST dockercloud/client timmyers/brewmap
+      - run:
+          name: Connect to brewmap swarm with docker cloud
+          command: |
+            docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock -e DOCKER_HOST dockercloud/client timmyers/brewmap
 
 workflows:
   version: 2
