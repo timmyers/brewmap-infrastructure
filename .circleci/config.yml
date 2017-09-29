@@ -29,7 +29,7 @@ jobs:
             HOST_REGEX="DOCKER_HOST=?(.+)"
             [[ $CONNECT_RESULT =~ $HOST_REGEX ]] && DOCKER_HOST=${BASH_REMATCH[1]}
             echo HOST=$DOCKER_HOST
-            docker run -e DOCKER_HOST=${DOCKER_HOST} -v /var/run/docker.sock:/var/run/docker.sock -d -t --entrypoint /bin/sh --name docker_proxy docker:17.03.1-ce
+            docker run -e DOCKER_HOST=${DOCKER_HOST} -v /var/run/docker.sock:/var/run/docker.sock -d -t --entrypoint /bin/sh --name docker_proxy docker:17.09.1-ce
             docker exec docker_proxy docker login -u timmyers -p c3drU3zZiuFJl4
             docker exec docker_proxy docker service ls
 
