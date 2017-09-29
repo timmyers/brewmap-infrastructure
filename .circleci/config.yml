@@ -16,12 +16,20 @@ jobs:
             terraform plan > /tmp/artifacts/tfplan
       - store_artifacts:
           path: /tmp/artifacts
+  docker:
+    docker:
+      - image: 17.09.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock -e DOCKER_HOST dockercloud/client timmyers/brewmap
 
 workflows:
   version: 2
   plan_and_approve:
     jobs:
       - build
+      - docker
       - hold:
           type: approval
           requires:

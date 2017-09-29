@@ -5,18 +5,18 @@ provider "digitalocean" {
   token = "${var.DO_TOKEN}"
 }
 
-# # Create a new SSH key
-# resource "digitalocean_ssh_key" "terraform" {
-#   name       = "Terraform"
-#   public_key = "${file("~/.ssh/public_github_id_rsa.pub")}"
-# }
+# Create a new SSH key
+resource "digitalocean_ssh_key" "terraform" {
+  name       = "Terraform"
+  public_key = "${file("~/.ssh/id_rsa.pub")}"
+}
 
 resource "digitalocean_droplet" "swarm1" {
   image    = "ubuntu-17-04-x64"
   name     = "brewmap-swarm1"
   region   = "sfo1"
   size     = "512mb"
-  ssh_keys = ["bb:61:e8:53:fb:51:82:2f:ee:ed:cf:f1:6a:fc:38:02"]
+  ssh_keys = ["${digitalocean_ssh_key.terraform.fingerprint}"]
 }
 
 # Configure DNS
@@ -39,9 +39,9 @@ resource "digitalocean_record" "www-brewmap-co" {
   value  = "www.brewmap.co.herokudns.com."
 }
 
-resource "digitalocean_record" "s1-brewmap-co" {
+resource "digitalocean_record" "swarm-brewmap-co" {
   domain = "${digitalocean_domain.brewmap-co.name}"
-  name   = "s1"
+  name   = "swarm"
   type   = "A"
   value  = "${digitalocean_droplet.swarm1.ipv4_address}"
 }
@@ -49,13 +49,6 @@ resource "digitalocean_record" "s1-brewmap-co" {
 resource "digitalocean_record" "portainer-brewmap-co" {
   domain = "${digitalocean_domain.brewmap-co.name}"
   name   = "portainer"
-  type   = "A"
-  value  = "${digitalocean_droplet.swarm1.ipv4_address}"
-}
-
-resource "digitalocean_record" "hyper-brewmap-co" {
-  domain = "${digitalocean_domain.brewmap-co.name}"
-  name   = "hyper"
   type   = "A"
   value  = "${digitalocean_droplet.swarm1.ipv4_address}"
 }
