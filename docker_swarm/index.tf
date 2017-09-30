@@ -5,6 +5,10 @@ provider "digitalocean" {
   token = "${var.DO_TOKEN}"
 }
 
+resource "digitalocean_ssh_key" "mbp" {
+  // imported
+}
+
 resource "digitalocean_droplet" "swarm1" {
   image    = "ubuntu-17-04-x64"
   name     = "brewmap-swarm1"
