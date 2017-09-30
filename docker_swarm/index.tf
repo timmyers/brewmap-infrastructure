@@ -62,36 +62,29 @@ resource "digitalocean_droplet" "swarm1" {
   ssh_keys = ["90:86:b5:e2:22:96:a4:0c:3e:4e:56:c8:e5:06:55:a1"]
 }
 
-# # Configure DNS
-# resource "digitalocean_domain" "brewmap-co" {
-#   name       = "brewmap.co"
-#   ip_address = "${digitalocean_droplet.swarm1.ipv4_address}"
-# }
-#
-# resource "digitalocean_record" "wildcard-brewmap-co" {
-#   domain = "${digitalocean_domain.brewmap-co.name}"
-#   name   = "*"
-#   type   = "A"
-#   value  = "${digitalocean_droplet.swarm1.ipv4_address}"
-# }
-#
-# resource "digitalocean_record" "www-brewmap-co" {
-#   domain = "${digitalocean_domain.brewmap-co.name}"
-#   name   = "www"
-#   type   = "CNAME"
-#   value  = "www.brewmap.co.herokudns.com."
-# }
-#
-# resource "digitalocean_record" "swarm-brewmap-co" {
-#   domain = "${digitalocean_domain.brewmap-co.name}"
-#   name   = "swarm"
-#   type   = "A"
-#   value  = "${digitalocean_droplet.swarm1.ipv4_address}"
-# }
-#
-# resource "digitalocean_record" "portainer-brewmap-co" {
-#   domain = "${digitalocean_domain.brewmap-co.name}"
-#   name   = "portainer"
-#   type   = "A"
-#   value  = "${digitalocean_droplet.swarm1.ipv4_address}"
-# }
+# Configure DNS
+resource "digitalocean_domain" "brewmap-co" {
+  name       = "brewmap.co"
+  ip_address = "${digitalocean_droplet.swarm1.ipv4_address}"
+}
+
+resource "digitalocean_record" "wildcard-brewmap-co" {
+  domain = "${digitalocean_domain.brewmap-co.name}"
+  name   = "*"
+  type   = "A"
+  value  = "${digitalocean_droplet.swarm1.ipv4_address}"
+}
+
+resource "digitalocean_record" "www-brewmap-co" {
+  domain = "${digitalocean_domain.brewmap-co.name}"
+  name   = "www"
+  type   = "CNAME"
+  value  = "www.brewmap.co.herokudns.com."
+}
+
+resource "digitalocean_record" "swarm-brewmap-co" {
+  domain = "${digitalocean_domain.brewmap-co.name}"
+  name   = "swarm"
+  type   = "A"
+  value  = "${digitalocean_droplet.swarm1.ipv4_address}"
+}
