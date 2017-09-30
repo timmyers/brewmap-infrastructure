@@ -9,7 +9,11 @@ jobs:
       - run:
           name: Initialize Terraform
           working_directory: ~/project/docker_swarm
-          command: terraform init
+          command: |
+            terraform init \
+              -backend-config="access_key=${AWS_ACCESS_KEY}" \
+              -backend-config="secret_key=${AWS_SECRET_KEY}"
+
       - run:
           name: Apply Terraform config
           working_directory: ~/project/docker_swarm
