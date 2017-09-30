@@ -42,11 +42,18 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Initialize Terraform
+          working_directory: ~/project/docker_swarm
+          command: |
+            terraform init \
+              -backend-config="access_key=${AWS_ACCESS_KEY}" \
+              -backend-config="secret_key=${AWS_SECRET_KEY}"
+            ./generateAnsibleInventory
+      - run:
           name: Ansible Playbook
           working_directory: ~/project/docker_stacks/traefik
           command: |
             ansible-playbook --version
-            ./generateAnsibleInventory.sh
             export ANSIBLE_FORCE_COLOR=true
             ansible-playbook \
               -i hosts.json \
