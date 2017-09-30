@@ -33,7 +33,6 @@ jobs:
             ansible-galaxy install atosatto.docker-swarm
             ansible-playbook \
               -i hosts.json \
-              -e 'host_key_checking=False' \
               playbook.yml
 
 workflows:
