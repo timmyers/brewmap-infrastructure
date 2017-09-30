@@ -1,33 +1,37 @@
-- name: Check if traefik-net docker network is up
-  command: >
-    docker network inspect traefik-net
-  register: traefik_net
-  ignore_errors: yes
+- name: Docker stacks
+  hosts: docker_swarm_manager[0]
+  become: true
+  tasks:
+    - name: Check if traefik-net docker network is up
+      command: >
+        docker network inspect traefik-net
+      register: traefik_net
+      ignore_errors: yes
 
-- name: traefik-net docker network up?
-  debug: msg="Running {{ traefik_net.rc }}"
+    - name: traefik-net docker network up?
+      debug: msg="Running {{ traefik_net.rc }}"
 
-- name: Create traefik-net docker overlay network
-  when: traefik_net.rc != 0
-  command: >
-    docker network create \
-    --opt encrypted \
-    --driver overlay \
-    traefik-net
+    - name: Create traefik-net docker overlay network
+      when: traefik_net.rc != 0
+      command: >
+        docker network create \
+        --opt encrypted \
+        --driver overlay \
+        traefik-net
 
-- name: Copy traefik stack definition
-  copy:
-    src: traefikStack.yml
-    dest: /tmp/traefikStack.yml
+    - name: Copy traefik stack definition
+      copy:
+        src: traefikStack.yml
+        dest: /tmp/traefikStack.yml
 
-- name: Start traefik stack
-  command: >
-    docker stack deploy \
-    --compose-file /tmp/traefikStack.yml \
-    traefik
+    - name: Start traefik stack
+      command: >
+        docker stack deploy \
+        --compose-file /tmp/traefikStack.yml \
+        traefik
 
-# - name: Update traefik service
-#   command: >
-#     docker stack deploy \
-#     --compose-file /tmp/traefikStack.yml \
-#     traefik
+    # - name: Update traefik service
+    #   command: >
+    #     docker stack deploy \
+    #     --compose-file /tmp/traefikStack.yml \
+    #     traefik
