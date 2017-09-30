@@ -5,18 +5,12 @@ provider "digitalocean" {
   token = "${var.DO_TOKEN}"
 }
 
-# Create a new SSH key
-resource "digitalocean_ssh_key" "terraform" {
-  name       = "Terraform"
-  public_key = "${file("~/.ssh/id_rsa.pub")}"
-}
-
 resource "digitalocean_droplet" "swarm1" {
   image    = "ubuntu-17-04-x64"
   name     = "brewmap-swarm1"
   region   = "sfo1"
   size     = "512mb"
-  ssh_keys = ["${digitalocean_ssh_key.terraform.fingerprint}"]
+  ssh_keys = ["${digitalocean_ssh_key.mbp.fingerprint}"]
 }
 
 # Configure DNS
