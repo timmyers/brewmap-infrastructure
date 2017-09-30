@@ -14,7 +14,7 @@ jobs:
           name: Apply Terraform config
           working_directory: ~/project/docker_swarm
           command: |
-            terraform apply
+            terraform plan
 
 workflows:
   version: 2
