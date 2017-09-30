@@ -29,10 +29,8 @@ jobs:
           working_directory: ~/project/docker_swarm
           command: |
             ./generateAnsibleInventory.sh
-            cat hosts.yml
             ansible-galaxy install atosatto.docker-swarm
-            ssh -o StrictHostKeyChecking=no root@107.170.243.231 date
-            ansible-playbook -i hosts.yml playbook.yml
+            ansible-playbook -i hosts.json playbook.yml
 
 workflows:
   version: 2
