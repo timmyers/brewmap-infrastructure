@@ -56,5 +56,5 @@ jobs:
             ansible-playbook --version
             export ANSIBLE_FORCE_COLOR=true
             ansible-playbook \
-              -i hosts.json \
+              -i ~/project/docker_swarm/hosts.json \
               playbook.yml
