@@ -7,11 +7,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Terraform imports
-          working_directory: ~/project/docker_swarm
-          command: |
-            terraform import digitalocean_ssh_key.mbp 13584915
-      - run:
           name: Initialize Terraform
           working_directory: ~/project/docker_swarm
           command: terraform init
@@ -19,6 +14,7 @@ jobs:
           name: Apply Terraform config
           working_directory: ~/project/docker_swarm
           command: |
+            terraform import digitalocean_ssh_key.mbp 13584915
             terraform apply
 
 workflows:
