@@ -1,46 +1,23 @@
 version: 2
 
 jobs:
-  build:
+  apply:
     docker:
       - image: hashicorp/terraform:light
     steps:
       - checkout
       - run:
-          working_directory: ~/project/terraform
+          name: Initialize Terraform
+          working_directory: ~/project/docker_swarm
           command: terraform init
       - run:
-          working_directory: ~/project/terraform
+          name: Apply Terraform config
+          working_directory: ~/project/docker_swarm
           command: |
-            mkdir /tmp/artifacts;
-            terraform plan > /tmp/artifacts/tfplan
-      - store_artifacts:
-          path: /tmp/artifacts
-  docker:
-    docker:
-      - image: docker:17.09.0-ce-git
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Connect to brewmap swarm with docker cloud
-          command: |
-            CONNECT_RESULT=$(docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock -e DOCKER_HOST dockercloud/client -u timmyers -p c3drU3zZiuFJl4 timmyers/brewmap)
-            HOST_REGEX="DOCKER_HOST=?(.+)"
-            [[ $CONNECT_RESULT =~ $HOST_REGEX ]] && DOCKER_HOST=${BASH_REMATCH[1]}
-            echo HOST=$DOCKER_HOST
-            docker run -e DOCKER_HOST=${DOCKER_HOST} -v /var/run/docker.sock:/var/run/docker.sock -d -t --entrypoint /bin/sh --name docker_proxy docker:17.09.0-ce
-            docker exec docker_proxy docker login -u timmyers -p c3drU3zZiuFJl4
-            docker exec docker_proxy docker service ls
-
+            terraform apply
 
 workflows:
   version: 2
   plan_and_approve:
     jobs:
-      - build
-      - docker
-      - hold:
-          type: approval
-          requires:
-            - build
+      - apply
