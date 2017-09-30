@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  update-infrastructure:
+  build:
     docker:
       - image: timmyers/brewmap-infrastructure
     steps:
