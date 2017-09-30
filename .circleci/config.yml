@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  apply:
+  update-infrastructure:
     docker:
       - image: timmyers/brewmap-infrastructure
     steps:
@@ -36,8 +36,18 @@ jobs:
               -i hosts.json \
               playbook.yml
 
-workflows:
-  version: 2
-  plan_and_approve:
-    jobs:
-      - apply
+  deploy-traefik:
+    docker:
+      - image: timmyers/brewmap-infrastructure
+    steps:
+      - checkout
+      - run:
+          name: Ansible Playbook
+          working_directory: ~/project/docker_stacks/traefik
+          command: |
+            ansible-playbook --version
+            ./generateAnsibleInventory.sh
+            export ANSIBLE_FORCE_COLOR=true
+            ansible-playbook \
+              -i hosts.json \
+              playbook.yml

@@ -20,19 +20,14 @@
     src: traefik//traefikStack.yml
     dest: /tmp/traefikStack.yml
 
-- name: Ensure /etc/traefik exists
-  file: >
-    path=/etc/traefik
-    recurse=yes
-    state=directory
-
-- name: Copy traefik toml definition
-  copy:
-    src: traefik/traefik.toml
-    dest: /etc/traefik/traefik.toml
-
 - name: Start traefik stack
   command: >
     docker stack deploy \
     --compose-file /tmp/traefikStack.yml \
     traefik
+
+# - name: Update traefik service
+#   command: >
+#     docker stack deploy \
+#     --compose-file /tmp/traefikStack.yml \
+#     traefik
