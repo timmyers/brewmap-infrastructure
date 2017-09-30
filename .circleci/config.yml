@@ -28,6 +28,7 @@ jobs:
           name: Ansible Playbook
           working_directory: ~/project/docker_swarm
           command: |
+            ansible-playbook --version
             ./generateAnsibleInventory.sh
             ansible-galaxy install atosatto.docker-swarm
             ansible-playbook -i hosts.json playbook.yml
