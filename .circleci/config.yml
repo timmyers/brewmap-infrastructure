@@ -48,7 +48,7 @@ jobs:
             terraform init \
               -backend-config="access_key=${AWS_ACCESS_KEY}" \
               -backend-config="secret_key=${AWS_SECRET_KEY}"
-            ./generateAnsibleInventory
+            ./generateAnsibleInventory.sh
       - run:
           name: Ansible Playbook
           working_directory: ~/project/docker_stacks/traefik
