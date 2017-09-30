@@ -5,16 +5,12 @@ provider "digitalocean" {
   token = "${var.DO_TOKEN}"
 }
 
-resource "digitalocean_ssh_key" "mbp" {
-  // imported
-}
-
 resource "digitalocean_droplet" "swarm1" {
   image    = "ubuntu-17-04-x64"
   name     = "brewmap-swarm1"
   region   = "sfo1"
   size     = "512mb"
-  ssh_keys = ["${digitalocean_ssh_key.mbp.fingerprint}"]
+  ssh_keys = ["90:86:b5:e2:22:96:a4:0c:3e:4e:56:c8:e5:06:55:a1"]
 }
 
 # Configure DNS
