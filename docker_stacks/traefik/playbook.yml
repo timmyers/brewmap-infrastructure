@@ -30,8 +30,6 @@
         --compose-file /tmp/traefikStack.yml \
         traefik
 
-    # - name: Update traefik service
-    #   command: >
-    #     docker stack deploy \
-    #     --compose-file /tmp/traefikStack.yml \
-    #     traefik
+    - name: Update traefik service
+      command: >
+        docker service update --force traefik_traefik
