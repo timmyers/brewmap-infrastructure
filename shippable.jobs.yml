@@ -1,0 +1,14 @@
+jobs:
+  name: Terraform Plan
+  type: runSh
+  steps:
+    - TASK:
+      - script: terraform plan
+  on_success:
+    - script: echo "SUCCESS"
+  on_failure:
+    - script: echo "FAILED"
+  on_cancel:
+    - script: echo "CANCEL"
+  always:
+    - script: pwd
