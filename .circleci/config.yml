@@ -3,7 +3,7 @@ version: 2
 jobs:
   apply:
     docker:
-      - image: timmyers/terraform
+      - image: timmyers/brewmap-infrastructure
     steps:
       - checkout
       - run:
