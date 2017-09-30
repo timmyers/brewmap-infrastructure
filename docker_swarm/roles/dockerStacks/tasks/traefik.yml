@@ -1,0 +1,38 @@
+- name: Check if traefik-net docker network is up
+  command: >
+    docker network inspect traefik-net
+  register: traefik_net
+  ignore_errors: yes
+
+- name: traefik-net docker network up?
+  debug: msg="Running {{ traefik_net.rc }}"
+
+- name: Create traefik-net docker overlay network
+  when: traefik_net.rc != 0
+  command: >
+    docker network create \
+    --opt encrypted \
+    --driver overlay \
+    traefik-net
+
+- name: Copy traefik stack definition
+  copy:
+    src: traefik//traefikStack.yml
+    dest: /tmp/traefikStack.yml
+
+- name: Ensure /etc/traefik exists
+  file: >
+    path=/etc/traefik
+    recurse=yes
+    state=directory
+
+- name: Copy traefik toml definition
+  copy:
+    src: traefik/traefik.toml
+    dest: /etc/traefik/traefik.toml
+
+- name: Start traefik stack
+  command: >
+    docker stack deploy \
+    --compose-file /tmp/traefikStack.yml \
+    traefik

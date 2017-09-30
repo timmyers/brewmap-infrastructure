@@ -7,49 +7,12 @@
   roles:
     - { role: atosatto.docker-swarm }
 
-# - name: Start traefik service
-#   hosts: docker_swarm_manager[0]
-#   become: true
-#   tasks:
-#     - name: Check if traefik-net docker network is up
-#       shell: >
-#         docker network inspect traefik-net
-#       register: traefik_net
-#       ignore_errors: yes
-#
-#     - name: traefik-net docker network up?
-#       debug: msg="Running {{ traefik_net.rc }}"
-#
-#     - name: Create traefik-net docker overlay network
-#       when: traefik_net.rc != 0
-#       shell: >
-#         docker network create \
-#         --opt encrypted \
-#         --driver overlay \
-#         traefik-net
-#
-#     - name: Copy traefik stack definition
-#       copy:
-#         src: ./traefikStack.yml
-#         dest: /tmp/traefikStack.yml
-#
-#     - name: Ensure /etc/traefik exists
-#       file: >
-#         path=/etc/traefik
-#         recurse=yes
-#         state=directory
-#
-#     - name: Copy traefik toml definition
-#       copy:
-#         src: ./traefik.toml
-#         dest: /etc/traefik/traefik.toml
-#
-#     - name: Start traefik stack
-#       shell: >
-#         docker stack deploy \
-#         --compose-file /tmp/traefikStack.yml \
-#         traefik
-#
+- name: Docker stacks
+  hosts: docker_swarm_manager[0]
+  become: true
+  roles:
+    - dockerStacks
+
 # - name: Start portainer stack
 #   hosts: docker_swarm_manager[0]
 #   become: true

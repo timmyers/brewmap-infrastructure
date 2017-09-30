@@ -31,6 +31,7 @@ jobs:
             ansible-playbook --version
             ./generateAnsibleInventory.sh
             ansible-galaxy install atosatto.docker-swarm
+            export ANSIBLE_FORCE_COLOR=true
             ansible-playbook \
               -i hosts.json \
               playbook.yml
