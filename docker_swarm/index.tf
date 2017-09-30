@@ -88,3 +88,13 @@ resource "digitalocean_record" "swarm-brewmap-co" {
   type   = "A"
   value  = "${digitalocean_droplet.swarm1.ipv4_address}"
 }
+
+output "swarm_ansible_inventory" {
+  value = {
+    masters = "${list(
+      "${digitalocean_droplet.swarm1.ipv4_address}"
+    )}"
+    slaves = "${list(
+    )}"
+  }
+}

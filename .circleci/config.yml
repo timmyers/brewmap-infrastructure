@@ -20,6 +20,17 @@ jobs:
           command: |
             terraform apply
 
+      - add_ssh_keys:
+          fingerprints:
+            - "90:86:b5:e2:22:96:a4:0c:3e:4e:56:c8:e5:06:55:a1"
+
+      - run:
+          name: Ansible Playbook
+          working_directory: ~/project/docker_swarm
+          command: |
+            ./generateAnsibleInventory.sh
+            ansible-playbook -i hosts.yml playbook.yml
+
 workflows:
   version: 2
   plan_and_approve:
