@@ -3,7 +3,7 @@ version: 2
 jobs:
   apply:
     docker:
-      - image: hashicorp/terraform:light
+      - image: timmyers/terraform
     steps:
       - checkout
       - run:
