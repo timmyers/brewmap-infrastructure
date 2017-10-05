@@ -10,10 +10,27 @@
 - name: Update Docker
   hosts: all
   tasks:
-    - name: Update docker-engine
+    - name: Install the docker apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - naem: Add the docker apt repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu zesty stable
+        state: present
+    - name: Uninstall old docker engine
       package:
         name: docker-engine
+        state: absent
+    - name: Update docker-engine
+      package:
+        name: docker-ce
         state: latest
+    - name: Enable the Docker daemon as a service and start it.
+      service:
+        name: docker
+        state: restarted
+        enabled: yes
 
 - name: Docker stacks
   hosts: docker_swarm_manager[0]
