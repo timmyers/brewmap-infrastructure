@@ -7,6 +7,14 @@
   roles:
     - { role: atosatto.docker-swarm }
 
+- name: Update Docker
+  hosts: all
+  tasks:
+    - name: Update docker-engine
+      package:
+        name: docker-engine
+        state: latest
+
 - name: Docker stacks
   hosts: docker_swarm_manager[0]
   become: true
