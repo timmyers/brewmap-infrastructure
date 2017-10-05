@@ -18,7 +18,7 @@ services:
         target: /etc/prometheus/prometheus.yml
 
 configs:
-  traefik:
+  prometheus:
     file: ./prometheus.yml
 
 networks:
