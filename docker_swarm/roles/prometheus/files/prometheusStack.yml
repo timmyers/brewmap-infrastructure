@@ -19,7 +19,7 @@ services:
 
 configs:
   traefik:
-    file: ./prometheus.toml
+    file: ./prometheus.yml
 
 networks:
   webgateway:
