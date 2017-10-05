@@ -5,8 +5,8 @@
 
 - name: Copy prometheus config
   copy:
-    src: traefik.toml
-    dest: /tmp/traefik.toml
+    src: prometheus.yml
+    dest: /tmp/prometheus.yml
 
 - name: Start prometheus stack
   command: >
