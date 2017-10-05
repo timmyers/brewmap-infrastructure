@@ -12,6 +12,7 @@
   become: true
   roles:
     - dockerStacks
+    - prometheus
 
 # - name: Start portainer stack
 #   hosts: docker_swarm_manager[0]

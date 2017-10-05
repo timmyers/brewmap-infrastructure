@@ -1,0 +1,17 @@
+- name: Copy prometheus stack definition
+  copy:
+    src: prometheusStack.yml
+    dest: /tmp/prometheusStack.yml
+
+- name: Copy prometheus config
+  copy:
+    src: traefik.toml
+    dest: /tmp/traefik.toml
+
+- name: Start prometheus stack
+  command: >
+    docker stack deploy \
+    --compose-file prometheusStack.yml \
+    prometheus
+  args:
+    chdir: /tmp
