@@ -35,7 +35,21 @@ resource "aws_iam_user_policy" "terraform" {
         "arn:aws:s3:::terraform.brewmap.co",
         "arn:aws:s3:::terraform.brewmap.co/*"
       ]
-    }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cloudformation:*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:*"
+      ],
+      "Resource": "*"
+    },
   ]
 }
 EOF
