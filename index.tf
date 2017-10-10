@@ -8,53 +8,6 @@ provider "aws" {
   secret_key = "${var.AWS_SECRET_KEY}"
 }
 
-resource "aws_iam_user_policy" "terraform" {
-  name = "user-terraform-policy"
-  user = "terraform"
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "iam:PutUserPolicy",
-        "iam:GetUserPolicy"
-      ],
-      "Resource": [
-        "arn:aws:iam::420538485983:user/terraform"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:*"
-      ],
-      "Resource": [
-        "arn:aws:s3:::terraform.brewmap.co",
-        "arn:aws:s3:::terraform.brewmap.co/*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "cloudformation:*"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ec2:*"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-EOF
-}
-
 terraform {
   backend "s3" {
     bucket  = "terraform.brewmap.co"
@@ -66,4 +19,8 @@ terraform {
 
 module "docker-swarm" {
   source = "./docker-swarm"
+}
+
+module "aws_iam" {
+  source = "./aws_iam"
 }

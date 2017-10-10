@@ -1,0 +1,7 @@
+# Terraform
+.terraform
+secrets.auto.tfvars
+secrets.backend-config
+
+# Ansible
+hosts.json # Generated dynamically
