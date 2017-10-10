@@ -49,7 +49,7 @@ resource "aws_iam_user_policy" "terraform" {
         "ec2:*"
       ],
       "Resource": "*"
-    },
+    }
   ]
 }
 EOF
