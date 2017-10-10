@@ -5,7 +5,7 @@ resource "aws_key_pair" "docker_swarm" {
 
 resource "aws_cloudformation_stack" "docker_swarm" {
   name = "docker-for-aws-swarm"
-  template_url = "https://editions-us-east-1.s3.amazonaws.com/aws/test/Docker.tmpl"
+  template_url = "https://editions-us-east-1.s3.amazonaws.com/aws/stable/Docker.tmpl"
   capabilities = ["CAPABILITY_IAM"]
 
   parameters {
