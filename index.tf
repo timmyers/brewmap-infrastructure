@@ -49,3 +49,7 @@ terraform {
     encrypt = true
   }
 }
+
+module "docker-swarm" {
+  source = "./docker-swarm"
+}

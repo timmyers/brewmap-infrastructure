@@ -12,6 +12,8 @@ jobs:
             terraform init \
               -backend-config="access_key=${AWS_ACCESS_KEY}" \
               -backend-config="secret_key=${AWS_SECRET_KEY}"
+            terraform get
+
 
       - run:
           name: Apply Terraform config
