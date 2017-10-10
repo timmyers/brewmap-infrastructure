@@ -8,7 +8,6 @@ jobs:
       - checkout
       - run:
           name: Initialize Terraform
-          working_directory: ~/project/docker_swarm
           command: |
             terraform init \
               -backend-config="access_key=${AWS_ACCESS_KEY}" \
@@ -16,25 +15,24 @@ jobs:
 
       - run:
           name: Apply Terraform config
-          working_directory: ~/project/docker_swarm
           command: |
             terraform apply
 
-      - add_ssh_keys:
-          fingerprints:
-            - "90:86:b5:e2:22:96:a4:0c:3e:4e:56:c8:e5:06:55:a1"
-
-      - run:
-          name: Ansible Playbook
-          working_directory: ~/project/docker_swarm
-          command: |
-            ansible-playbook --version
-            ./generateAnsibleInventory.sh
-            ansible-galaxy install atosatto.docker-swarm
-            export ANSIBLE_FORCE_COLOR=true
-            ansible-playbook \
-              -i hosts.json \
-              playbook.yml
+      # - add_ssh_keys:
+      #     fingerprints:
+      #       - "90:86:b5:e2:22:96:a4:0c:3e:4e:56:c8:e5:06:55:a1"
+      #
+      # - run:
+      #     name: Ansible Playbook
+      #     working_directory: ~/project/docker_swarm
+      #     command: |
+      #       ansible-playbook --version
+      #       ./generateAnsibleInventory.sh
+      #       ansible-galaxy install atosatto.docker-swarm
+      #       export ANSIBLE_FORCE_COLOR=true
+      #       ansible-playbook \
+      #         -i hosts.json \
+      #         playbook.yml
 
   deploy-traefik:
     docker:
