@@ -17,31 +17,3 @@ resource "aws_cloudformation_stack" "docker_swarm" {
     EnableSystemPrune = "yes"
   }
 }
-
-# data "aws_route53_zone" "closetbox" {
-#   name = "closetbox.com."
-# }
-
-# resource "aws_route53_record" "swarm" {
-#   zone_id = "${data.aws_route53_zone.closetbox.zone_id}"
-#   name    = "swarm.${data.aws_route53_zone.closetbox.name}"
-#   type    = "A"
-#
-#   alias {
-#     name                   = "${lower(aws_cloudformation_stack.docker_swarm.outputs.DefaultDNSTarget)}"
-#     zone_id                = "${aws_cloudformation_stack.docker_swarm.outputs.ELBDNSZoneID}"
-#     evaluate_target_health = false
-#   }
-# }
-#
-# resource "aws_route53_record" "wildcard-swarm" {
-#   zone_id = "${data.aws_route53_zone.closetbox.zone_id}"
-#   name    = "*.swarm.${data.aws_route53_zone.closetbox.name}"
-#   type    = "A"
-#
-#   alias {
-#     name                   = "${lower(aws_cloudformation_stack.docker_swarm.outputs.DefaultDNSTarget)}"
-#     zone_id                = "${aws_cloudformation_stack.docker_swarm.outputs.ELBDNSZoneID}"
-#     evaluate_target_health = false
-#   }
-# }
