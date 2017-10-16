@@ -17,10 +17,6 @@ terraform {
   }
 }
 
-module "docker-swarm" {
-  source = "./docker-swarm"
-}
-
 module "aws_iam" {
   source = "./aws_iam"
 }
