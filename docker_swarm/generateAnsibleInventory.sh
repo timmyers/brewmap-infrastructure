@@ -1,3 +1,0 @@
-terraform output -json swarm_ansible_inventory \
-  | jq '.value | (reduce .masters[] as $item ({}; . + {"swarm-master-\($item)": {ansible_host: $item, ansible_user: "root", ansible_python_interpreter: "/usr/bin/python3", ansible_ssh_common_args: "-o StrictHostKeyChecking=no"}})) as $masters | (reduce .slaves[] as $item ({}; . + {"swarm-slave-\($item)": {ansible_host: $item, ansible_user: "root", ansible_python_interpreter: "/usr/bin/python3", ansible_ssh_common_args: "-o StrictHostKeyChecking=no"}})) as $slaves | {docker_swarm_manager: {hosts: $masters}, docker_swarm_worker: {hosts: $slaves}}' \
-  >| ./hosts.json

@@ -30,16 +30,7 @@ resource "aws_iam_user_policy" "terraform" {
     {
       "Effect": "Allow",
       "Action": [
-        "cloudformation:*",
-        "ec2:*",
-        "autoscaling:*",
-        "dynamodb:*",
-        "logs:*",
-        "sqs:*",
-        "iam:*",
-        "elasticloadbalancing:*",
-        "elasticfilesystem:*",
-        "lambda:*"
+        "dynamodb:*"
       ],
       "Resource": [
         "*"
