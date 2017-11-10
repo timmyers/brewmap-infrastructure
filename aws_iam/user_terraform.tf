@@ -30,7 +30,9 @@ resource "aws_iam_user_policy" "terraform" {
     {
       "Effect": "Allow",
       "Action": [
-        "dynamodb:*"
+        "route53:*",
+        "acm:*",
+        "cloudfront:*"
       ],
       "Resource": [
         "*"

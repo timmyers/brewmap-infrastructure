@@ -21,6 +21,6 @@ module "aws_iam" {
   source = "./aws_iam"
 }
 
-module "aws_dynamodb" {
-  source = "./aws_dynamodb"
+module "aws_static_hosting" {
+  source = "./aws_static_hosting"
 }
