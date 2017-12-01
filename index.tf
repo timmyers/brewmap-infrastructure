@@ -24,3 +24,7 @@ module "aws_iam" {
 module "aws_static_hosting" {
   source = "./aws_static_hosting"
 }
+
+module "api" {
+  source = "./api"
+}
