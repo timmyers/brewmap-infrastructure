@@ -2,6 +2,10 @@ resource "aws_route53_zone" "brewmap-co" {
   name = "brewmap.co"
 }
 
+resource "aws_route53_zone" "brewedhere-co" {
+  name = "brewedhere.co"
+}
+
 resource "aws_s3_bucket" "s3" {
   bucket = "www.brewmap.co"
   acl    = "public-read"
@@ -27,33 +31,33 @@ resource "aws_s3_bucket" "s3" {
 POLICY
 }
 
-resource "aws_s3_bucket" "logs" {
-  bucket = "cflogs.www.brewmap.co"
-  acl    = "private"
-}
-
 data "aws_acm_certificate" "wildcard" {
   domain   = "*.brewmap.co"
+  statuses = ["ISSUED"]
+}
+
+data "aws_acm_certificate" "brewedhere" {
+  domain   = "*.brewedhere.co"
   statuses = ["ISSUED"]
 }
 
 resource "aws_cloudfront_distribution" "www" {
   origin {
     domain_name = "${aws_s3_bucket.s3.bucket_domain_name}"
-    origin_id   = "S3-www.brewmap.co"
+    origin_id   = "S3-www.brewedhere.co"
   }
 
   enabled             = true
-  comment             = "brewmap static site"
+  comment             = "brewedhere static site"
   default_root_object = "index.html"
 
-  aliases = ["www.brewmap.co"]
+  aliases = ["www.brewedhere.co"]
 
   default_cache_behavior {
     allowed_methods  = ["HEAD", "GET"]
     cached_methods   = ["HEAD", "GET"]
     compress         = true
-    target_origin_id = "S3-www.brewmap.co"
+    target_origin_id = "S3-www.brewedhere.co"
 
     forwarded_values {
       query_string = false
@@ -75,11 +79,6 @@ resource "aws_cloudfront_distribution" "www" {
     response_page_path = "/index.html"
   }
 
-  logging_config {
-    include_cookies = false
-    bucket          = "${aws_s3_bucket.logs.bucket_domain_name}"
-  }
-
   restrictions {
     geo_restriction {
       restriction_type = "whitelist"
@@ -95,8 +94,8 @@ resource "aws_cloudfront_distribution" "www" {
 }
 
 resource "aws_route53_record" "record" {
-  zone_id = "${aws_route53_zone.brewmap-co.zone_id}"
-  name    = "www.${aws_route53_zone.brewmap-co.name}"
+  zone_id = "${aws_route53_zone.brewedhere-co.zone_id}"
+  name    = "www.${aws_route53_zone.brewedhere-co.name}"
   type    = "A"
 
   alias {
